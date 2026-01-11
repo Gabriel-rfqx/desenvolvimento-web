@@ -54,7 +54,7 @@ next_button.addEventListener('click', nextbutton)
 // ---------------------------------------------------------------------
 
 const imagens = document.querySelectorAll('.imgs')
-const tags = ['um', 'dois', 'tres']
+const tags = ['dois', 'um', 'tres']
 let conta = 0
 
 function remove_grid(){
@@ -74,3 +74,49 @@ function carrocel(){
 }
 
 setInterval(carrocel, 3000)
+
+// -----------------------------------------------------------------------------
+
+
+
+const sliders = document.querySelectorAll('.slider3')
+const fila_butao = document.getElementById("navegacao")
+let atual3 = 0
+const proxbutton3 = document.getElementById('next-button3')
+const prevbutton3 = document.getElementById('prev-button3')
+
+function anterior(){
+    let atual30 = (atual3 - 1 + sliders.length) % sliders.length;
+    ir_slide(atual30)
+}
+function proximo(){
+    let atual30 = (atual3 + 1) % sliders.length;
+    ir_slide(atual30)
+}
+sliders.forEach( (_, index) => {
+    let botao = document.createElement('span')
+    botao.dataset.index = index
+    botao.classList.add("botao")
+    if (index == 0){botao.classList.add('on')}
+    fila_butao.append(botao)
+})
+
+function ir_slide(index){
+    sliders[atual3].classList.remove('on')
+    fila_butao.children[atual3].classList.remove('on')
+
+    atual3 = index
+
+    sliders[index].classList.add('on')
+    fila_butao.children[index].classList.add('on')
+}
+
+setInterval(proximo, 3000)
+
+fila_butao.addEventListener('click', (e) => {
+    if (!e.target.classList.contains('botao')) return
+    ir_slide(Number(e.target.dataset.index))
+})
+
+proxbutton3.addEventListener('click', proximo) 
+prevbutton3.addEventListener('click', anterior)
