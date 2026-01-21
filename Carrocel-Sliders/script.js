@@ -120,3 +120,41 @@ fila_butao.addEventListener('click', (e) => {
 
 proxbutton3.addEventListener('click', proximo) 
 prevbutton3.addEventListener('click', anterior)
+
+//--------------------------------------------------------
+
+const fotos = document.querySelectorAll('.fotos')
+const tela = document.getElementById('fotografias')
+const localiza = document.getElementById('localizacao')
+let tela_atual = 0
+function criar_span(){
+    fotos.forEach((_, index) =>{
+        span = document.createElement('span')
+        span.classList.add('bola')
+        span.dataset.pos = index
+        if(index == 0){
+            span.classList.add('ap')
+        }
+        localiza.append(span)
+    })
+}
+
+function ir_foto(pos){
+    localiza.children[tela_atual].classList.remove('ap')
+    tela_atual = pos
+    tela.style.transform =  `translateX(-${pos*100}%)`
+    localiza.children[tela_atual].classList.add('ap')
+}
+
+function automatico(){
+    localiza.children[tela_atual].classList.remove('ap')
+    tela_atual++
+    if(tela_atual > fotos.length - 1){ tela_atual = 0}
+    tela.style.transform =  `translateX(-${tela_atual*100}%)`
+    localiza.children[tela_atual].classList.add('ap')
+}
+setInterval(automatico, 2000)
+criar_span()
+localiza.addEventListener('click', (e) => {if(e.target.classList.contains('bola')){ir_foto(e.target.dataset.pos)}
+})
+
